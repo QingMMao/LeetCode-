@@ -1,0 +1,30 @@
+一、Python
+1.第3题
+设置两个指针i和j，以及用来记最常非重复子串的list。开始的时候，j往后移动，如果j代表的字母不在记录中，则加入记录中；否则，break。此时得到子串长度，
+和以前的长度进行比较，取较大的那个。i往后移，并且删除记录中i代表的字母。
+
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        count = 0
+        record = []
+        
+        i = j = 0
+        
+        while j<len(s):
+            while j<len(s):
+                if s[j] in record:
+                    break
+                else:
+                    record.append(s[j])
+                    j += 1
+
+            count = max(count,j-i)
+            record.remove(s[i])
+
+            i += 1
+            
+        return count

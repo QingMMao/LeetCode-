@@ -1,0 +1,50 @@
+第五题
+为了统一奇回文和偶回文，在字符串中加上"#"，s_initial = "aba"变成s_preprocessing = "#a#b#a#"。初始化一个与s_preprocessing长度相同的全为0的数组p。
+设置一个指针i，i一直往后移，不前移。MaxRight是当前访问到所有回文串中最右边的字符的位置。Pos是MaxRight对应回文串的对称轴的位置。
+分情况：
+1.i在MaxRight的右边：以i为对称轴的回文串还没被访问。这时，以i为中心向两边扩展。
+2.i在MaxRight的左边：扫到了部分以i为对称轴的子串。这时，回文半径至少是它对称位置的半径。然后再以i为中心向两边扩展。
+
+class Solution(object):
+    def longestPalindrome(self,s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if len(s)<=1:
+            return s
+        
+        s = "#"+"#".join(s)+"#"
+        p = [0]*len(s)
+        Pos = 0
+        MaxRight = 0
+        
+        for i in range(len(s)):
+            if i<MaxRight:
+                p[i] = min(p[2*Pos-i],MaxRight-i)
+            else:
+                p[i] = 1
+            while i-p[i]>=0 and i+p[i]<len(s) and s[i-p[i]]==s[i+p[i]]:
+                p[i] += 1
+                
+            if p[i]+i>MaxRight:
+                MaxRight = p[i]+i-1
+                Pos = i
+                
+        index = 0
+        temp = p[0]
+        for i in range(len(p)):
+            if p[i]>temp:
+                index = i
+                temp = p[i]
+        temp -= 1
+        Palindromic = s[index-temp:index+temp+1]
+        res = ""
+        for i in Palindromic:
+            if i!="#":
+                res += i
+            
+        return res
+            
+    
+print(Solution.longestPalindrome("aba"))

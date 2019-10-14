@@ -28,3 +28,26 @@ class Solution(object):
             i += 1
             
         return count
+
+2.第11题
+总的来说，这个窗口是连续的。最开始的窗口为数组的大小，窗口不断缩小，那么是从那边往里缩小呢？装水有是看两边木板的最小值，所以两边木板，哪个小就移动哪个。
+每次致力于比上次更长的木板。
+
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        i,j = 0,len(height)-1
+        maxarea = 0
+        
+        while i < j:
+            area = (j-i)*min(height[i],height[j])
+            if area > maxarea:
+                maxarea = area
+            if height[i] < height[j]:
+                i += 1
+            else:
+                j -= 1
+        return maxarea

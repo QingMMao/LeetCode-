@@ -1,0 +1,26 @@
+用numRows行来保存每一行
+
+class Solution(object):
+    def convert(s, numRows):
+        if numRows==1:
+            return s
+        
+        record = ['']*numRows
+        count = 0
+        add = 1
+        for i in s:
+            record[count]+=i
+            count += add
+            if count==0 or count==numRows-1:
+                add = -add
+                
+            
+        res = ""
+        for i in record:
+            res = res+"".join(i)
+        return res
+    
+print(Solution.convert("PAYPALISHIRING",3))
+            
+        
+        

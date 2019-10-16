@@ -39,7 +39,7 @@ class Solution(object):
                 i += 1
             else:
                 j -= 1
-3.第36题
+3.第39题
 先给数组排个序，这样到target小于candidates[index]的时候，就不用再继续往下了。
 path记录现在相加还未达到target的所有值，target不断减去path中的值。如果target为0了，说明path里面的值相加符合条件，加入到res里面，
 如果target小于现在candidates[index]，那么就无法继续下去。index记录遍历到数组的位置。

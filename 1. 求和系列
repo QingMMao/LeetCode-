@@ -1,0 +1,67 @@
+一、Python
+1.第1题
+新建一个字典，这个值为key，这个值所在的位置为value。如果是a+b=target，那么存储的这个key为a，b=target-a，看b是否存在于字典中，
+如果存在且不是同一位置，那么就找到了这两个位置。
+
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        d = {}
+        for i,n in enumerate(nums):
+            if n not in d:
+                d[n] = i
+            x = target-n
+            if x in d and d[x]!=i:
+                return [i,d[x]]
+       
+2.第167题
+已经是有序的数组了，设置两个指针i和j，分别从两头遍历数组。如若i和j指向的值相加为target，返回；和小于target，i加一；和大于target，j减一。
+
+class Solution(object):
+    def twoSum(self, numbers, target):
+        """
+        :type numbers: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        i = 0
+        j = len(numbers)-1
+        
+        while i<j:
+            temp = numbers[i]+numbers[j]
+            if temp==target:
+                return [i+1,j+1]
+            elif temp<target:
+                i += 1
+            else:
+                j -= 1
+3.第36题
+先给数组排个序，这样到target小于candidates[index]的时候，就不用再继续往下了。
+path记录现在相加还未达到target的所有值，target不断减去path中的值。如果target为0了，说明path里面的值相加符合条件，加入到res里面，
+如果target小于现在candidates[index]，那么就无法继续下去。index记录遍历到数组的位置。
+
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        candidates.sort()
+        self.func(candidates,target,0,[],res)
+        return res
+        
+    def func(self,candidates,target,index,path,res):
+        if target==0:
+            res.append(path)
+            return
+        if target<candidates[index]:
+            return 
+        
+        for i in range(index,len(candidates)):
+            self.func(candidates,target-candidates[i],i,path+[candidates[i]],res)

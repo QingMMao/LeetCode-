@@ -65,3 +65,30 @@ class Solution(object):
         
         for i in range(index,len(candidates)):
             self.func(candidates,target-candidates[i],i,path+[candidates[i]],res)
+            
+ 4.第40题
+ 想法同30题一样，先把数组排序，区别是数组里面的数组不能重复。
+ 
+ class Solution(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        
+        res = []
+        self.func(candidates,target,0,[],res)
+        return res
+    
+    def func(self, candidates,target,index,path,res):
+        if target==0:
+            if path not in res:
+                res.append(path)
+            return
+        if index>=len(candidates) or candidates[index]>target:
+            return
+        
+        for i in range(index,len(candidates)):
+            self.func(candidates,target-candidates[i],i+1,path+[candidates[i]],res)

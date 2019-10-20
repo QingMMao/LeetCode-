@@ -1,0 +1,43 @@
+1.第46题
+使用递归，挨个把其中的元素当作第一个元素。
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        
+        self.func(nums,[],res,len(nums))
+        
+        return res
+    
+    def func(self,nums,path,res,n):
+        if len(path) == n:
+            res.append(path)
+            return
+        
+        for i in range(len(nums)):
+            self.func(nums[:i]+nums[i+1:],path+[nums[i]],res,n)
+2.第47题
+和46题解法一样，在加入答案的时候要判断是否已经包含在答案中。
+class Solution(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        
+        self.func(nums,[],res,len(nums))
+        
+        return res
+    
+    def func(self,nums,path,res,n):
+        if len(path) == n:
+            if path not in res:
+                res.append(path)
+            return
+        
+        for i in range(len(nums)):
+            self.func(nums[:i]+nums[i+1:],path+[nums[i]],res,n)

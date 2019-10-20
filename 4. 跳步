@@ -1,0 +1,47 @@
+1.第55题
+使用动态规划。数组的最后一位肯定能达到末尾，从后往前，如果这一位置能到达末尾，那么其他能到达这一位置的也能达到末尾。
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        index = len(nums)-1
+        
+        j = len(nums)-2
+        while j>=0:
+            if nums[j]>=index-j:
+                index = j
+            j -= 1
+        return index==0
+        
+2.第45题
+跳第一步能到达的最远距离为0+nums[0]，在这一区间中，找到最大的i+nums[i]，j到达到0+nums[0]的时候，必须得跳了，从i那里跳。接着在i到i+nums[i]区间寻找
+最大的k+nums[k]......当能跳到末尾的时候，返回跳的次数。
+class Solution(object):
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        #能到达
+        if len(nums)<=1:
+            return 0
+        
+        #目前能达到的最远距距离
+        max_distance = 0
+        #通过到目前为止每一个元素能到达最远距离
+        temp = 0
+        #跳的次数
+        count = 0
+        
+        for i in range(len(nums)):
+            #记录目前能到达的最远距离
+            temp = max(temp,i+nums[i])
+            #如果目前到达了前一能到达的最远距离，必须得跳一步了。然后选择前面一段元素能到达的最远距离最为下一最远距离。
+            if i == max_distance:
+                count += 1
+                max_distance = temp
+            #跳到末尾了
+            if max_distance>=len(nums)-1:
+                return count

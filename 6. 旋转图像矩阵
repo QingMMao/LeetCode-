@@ -1,0 +1,26 @@
+第48题
+由外往内，的正方形框，逐个数旋转。
+
+class Solution(object):
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix) 
+        if n<=1:
+            return matrix
+        
+        for i in range(n//2):   #我们初始的旋转点只需要取全部矩阵的1/4就行
+            for c in range(i,n-1-i):
+                r = i
+                temp = matrix[r][c]
+                #逐个像素点旋转
+                for j in range(3):
+                    next_r,next_c = n-1-c,r
+                    matrix[r][c] = matrix[next_r][next_c]
+                    r,c = next_r,next_c
+                #初始点给最后一个旋转点
+                matrix[r][c] = temp
+                
+        return matrix

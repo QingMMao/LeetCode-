@@ -1,0 +1,19 @@
+第53题
+用动态规划，只把数组遍历一次，每次更新两个值：当前最大值，和记录上一次的最大值。当前最大值为：当前最大值加上指到的这个数，和，当前指到的数，的较大值。
+上一次最大值为：当前最大值，和，上一次最大值，的较大值。
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums)==0:
+            return 0
+        last_max = nums[0]
+        now_max = nums[0]
+        
+        for i in range(1,len(nums)):
+            now_max = max(now_max+nums[i],nums[i])
+            last_max = max(last_max,now_max)
+        return last_max
+            

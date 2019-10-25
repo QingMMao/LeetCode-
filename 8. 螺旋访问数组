@@ -1,0 +1,41 @@
+第54题
+挨个顺时针访问最外围的那一圈数字。
+
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        r = len(matrix)
+        if r==0:
+            return []
+        if r==1:
+            return matrix[0]
+        c = len(matrix[0])
+        
+        res = []
+        self.func(matrix,0,0,r,c,res,r*c)
+        
+        return res
+    
+    def func(self,matrix,low_r,low_c,high_r,high_c,res,size):
+        
+        for j in range(low_c,high_c):
+            res.append(matrix[low_r][j])
+        if len(res)==size:
+            return
+        for i in range(low_r+1,high_r):
+            res.append(matrix[i][high_c-1])
+        if len(res)==size:
+            return
+        for j in range(low_c,high_c-1)[::-1]:
+            res.append(matrix[high_r-1][j])
+        if len(res)==size:
+            return
+        for i in range(low_r+1,high_r-1)[::-1]:
+            res.append(matrix[i][low_c])
+        if len(res)==size:
+            return
+
+        self.func(matrix,low_r+1,low_c+1,high_r-1,high_c-1,res,size)

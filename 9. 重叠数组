@@ -1,0 +1,61 @@
+1.第56题
+先将list中的数组按照数组的第一位进行排序，然后看后面的数组是否包含在其中，如果是，就加入其中。
+class Solution(object):
+    def merge(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        intervals.sort()
+        
+        
+        res = []
+        i = 0
+        j = 1
+        
+        while i<len(intervals):
+            start = i
+            end = i
+            temp = intervals[i][1]
+            while j<len(intervals) and temp>=intervals[j][0]:
+                end = j
+                temp = max(temp,intervals[j][1])
+                i += 1
+                j += 1
+            res.append([intervals[start][0],temp])
+            i = end+1
+            j = i+1
+            
+        return res
+        
+ 2.第57题
+ class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[List[int]]
+        :type newInterval: List[int]
+        :rtype: List[List[int]]
+        """
+        intervals.append(newInterval)
+        
+        intervals.sort()
+        
+        
+        res = []
+        i = 0
+        j = 1
+        
+        while i<len(intervals):
+            start = i
+            end = i
+            temp = intervals[i][1]
+            while j<len(intervals) and temp>=intervals[j][0]:
+                end = j
+                temp = max(temp,intervals[j][1])
+                i += 1
+                j += 1
+            res.append([intervals[start][0],temp])
+            i = end+1
+            j = i+1
+            
+        return res

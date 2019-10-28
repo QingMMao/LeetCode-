@@ -1,0 +1,43 @@
+第60题
+n个数组成的全排列共有(n-1)个，可分为n组，每组(n-1)!个。属于哪一组，就在数组的哪个位置。
+
+class Solution(object):
+    def getPermutation(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: str
+        """
+        numbers = [i for i in range(1,n+1)]
+        
+        res = []
+        group = self.factorial(n-1)
+        k = k-1
+        
+        while len(numbers):
+            a = k//group
+            b = k%group
+            
+            res.append(numbers[a])
+            del numbers[a]
+            
+            if b==0:
+                res = res+numbers
+                break
+            else:
+                k = b
+                group = group//(n-1)
+                n = n-1
+                
+        ans = ""
+        for num in res:
+            ans = ans+str(num)
+        
+        return ans
+        
+        
+    def factorial(self,n):
+        if n==1 or n==0:
+            return 1
+        else:
+            return n*self.factorial(n-1)

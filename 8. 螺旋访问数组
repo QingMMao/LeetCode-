@@ -1,4 +1,4 @@
-第54题
+1.第54题
 挨个顺时针访问最外围的那一圈数字。
 
 class Solution(object):
@@ -39,3 +39,48 @@ class Solution(object):
             return
 
         self.func(matrix,low_r+1,low_c+1,high_r-1,high_c-1,res,size)
+        
+      
+2.第59题
+和上一题一样，先穿件一个全为0的n*n数组，然后螺旋往里填数字。
+class Solution(object):
+    def generateMatrix(self, n):
+        """
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        for i in range(n):
+            res.append([0]*n)
+            
+        self.func(res,0,0,n,n,1,n*n)
+        
+        return res
+    
+    def func(self, matrix,low_r,low_c,high_r,high_c,number,size):
+        
+        for j in range(low_c,high_c):
+            matrix[low_r][j] = number
+            number += 1
+        if number>size:
+            return
+        
+        for i in range(low_r+1,high_r):
+            matrix[i][high_c-1] = number
+            number += 1
+        if number>size:
+            return
+        
+        for j in range(low_c,high_c-1)[::-1]:
+            matrix[high_r-1][j] = number
+            number += 1
+        if number>size:
+            return
+        
+        for i in range(low_r+1,high_r-1)[::-1]:
+            matrix[i][low_c] = number
+            number += 1
+        if number>size:
+            return
+        
+        self.func(matrix,low_r+1,low_c+1,high_r-1,high_c-1,number,size)

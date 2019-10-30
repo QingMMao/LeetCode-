@@ -1,0 +1,24 @@
+第62题
+从左下开始走，最左边和最下边的那一排只能走一条路，其余的可以往右或者往下，那么这一格走得方法数就是右边格子和下边格子的方法数的和。
+
+class Solution(object):
+    def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        matrix = [[0]*n for _ in range(m)]
+        
+        matrix[m-1][n-1] = 1
+        for i in range(m-1):
+            matrix[i][n-1] = 1
+        for j in range(n-1):
+            matrix[m-1][j] = 1
+            
+        for i in range(m-1)[::-1]:
+            for j in range(n-1)[::-1]:
+                matrix[i][j] = matrix[i][j+1]+matrix[i+1][j]
+            
+        
+        return matrix[0][0]

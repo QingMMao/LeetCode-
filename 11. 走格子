@@ -22,3 +22,39 @@ class Solution(object):
             
         
         return matrix[0][0]
+
+第63题
+和上题一样，不过遇到障碍的时候这个格子就为0。对于最右边的那一列，从下到上，一旦遇到障碍，那么上面所有的路都走不通了。对于最下边那一列，从右往左，
+一旦遇到障碍，那么左边所有的路都走不通了。对于其余的格子，如果有障碍，那么就为0，否则为下方和右方格子的和。
+
+class Solution(object):
+    def uniquePathsWithObstacles(self, obstacleGrid):
+        """
+        :type obstacleGrid: List[List[int]]
+        :rtype: int
+        """
+        m = len(obstacleGrid)
+        if m==0:
+            return 0
+        n = len(obstacleGrid[0])
+        if n==0:
+            return 1
+        if obstacleGrid[m-1][n-1]==1:
+            return 0
+        
+        matrix = [[0]*n for _ in range(m)]
+        
+        matrix[m-1][n-1] = 1
+        for i in range(m-1)[::-1]:
+            if obstacleGrid[i][n-1]==0:
+                matrix[i][n-1] = matrix[i+1][n-1]
+        for j in range(n-1)[::-1]:
+            if obstacleGrid[m-1][j]==0:
+                matrix[m-1][j] = matrix[m-1][j+1]
+            
+        for i in range(m-1)[::-1]:
+            for j in range(n-1)[::-1]:
+                if obstacleGrid[i][j]==0:
+                    matrix[i][j] = matrix[i][j+1]+matrix[i+1][j]
+            
+        return matrix[0][0]

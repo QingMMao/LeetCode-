@@ -41,3 +41,27 @@ class Solution(object):
         
         for i in range(len(nums)):
             self.func(nums[:i]+nums[i+1:],path+[nums[i]],res,n)
+第78题
+数组中没有重复的，进行排序，然后加入的条件是大于子数组的最后一个
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        res = [[]]
+        l = len(nums)
+        
+        for length in range(1,l+1)[::-1]:
+            for sub in res:
+                if len(sub)==0 and len(sub)==l-length:
+                    for j in range(0,l):
+                        res.append(sub+[nums[j]])
+                    continue
+                if len(sub)==l-length:
+                    for j in range(l-length,l):
+                        if nums[j]>sub[-1]:
+                            res.append(sub+[nums[j]])
+
+        return res

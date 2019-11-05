@@ -1,0 +1,38 @@
+第74题
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        r = len(matrix)
+        if r==0:
+            return False
+        c = len(matrix[0])
+        if c==0:
+            return False
+        
+        if matrix[0][0]>target or matrix[r-1][c-1]<target:
+            return False
+        
+        temp_r = 0
+        for i in range(r):
+            if matrix[i][c-1]==target:
+                return True
+            if matrix[i][c-1]>target:
+                temp_r = i
+                break
+            
+        high = c-1
+        low = 0
+        while low<high:
+            mid = high+low//2
+            if matrix[temp_r][high]==target or matrix[temp_r][mid]==target or matrix[temp_r][low]==target:
+                return True
+            if matrix[temp_r][mid]<target:
+                low = mid+1
+            else:
+                high = mid-1
+                
+        return False

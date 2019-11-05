@@ -1,5 +1,5 @@
 第66题
-从最低位向前进位就行
+从最低位向前进位就行，十进制
 class Solution(object):
     def plusOne(self, digits):
         """
@@ -20,3 +20,40 @@ class Solution(object):
             digits.insert(0,carry)
             
         return digits
+
+第67题
+从最低位向前进位就行，二进制
+class Solution(object):
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        i = len(a)-1
+        j = len(b)-1
+        
+        carry = 0
+        res = ""
+        
+        while i>=0 and j>=0:
+            temp = int(a[i])+int(b[j])+carry
+            res = str(temp%2)+res
+            carry = temp//2
+            i -= 1
+            j -= 1
+        while i>=0:
+            temp = int(a[i])+carry
+            res = str(temp%2)+res
+            carry = temp//2
+            i -= 1
+        while j>=0:
+            temp = int(b[j])+carry
+            res = str(temp%2)+res
+            carry = temp//2
+            j -= 1
+        if carry:
+            res = str(carry)+res
+            
+        return res
+            

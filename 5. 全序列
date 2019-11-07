@@ -41,7 +41,7 @@ class Solution(object):
         
         for i in range(len(nums)):
             self.func(nums[:i]+nums[i+1:],path+[nums[i]],res,n)
-第78题
+3.第78题
 数组中没有重复的，进行排序，然后加入的条件是大于子数组的最后一个
 class Solution(object):
     def subsets(self, nums):
@@ -64,4 +64,26 @@ class Solution(object):
                         if nums[j]>sub[-1]:
                             res.append(sub+[nums[j]])
 
+        return res
+        
+4.第90题
+对数组进行排序，这样就可以把重复的放在一块了，初始化返回值为[[]]。对于数组中的每个数字，往返回值里面的每一个已有答案加入，如果答案中不存在，就加入。
+class Solution(object):
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        
+        res = [[]]
+        
+        for i in range(len(nums)):
+            this_time = []
+            for sub in res:
+                temp = sub+[nums[i]]
+                if temp not in res:
+                    this_time.append(temp)
+            res += this_time  
+                    
         return res

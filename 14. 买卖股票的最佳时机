@@ -1,0 +1,54 @@
+第121题
+一个动态规划问题。将数组分为连续单调递增的子数组，在每个子数组里面，最大值减去最小值为备选项，备选项中的最大值为利润。
+如果是单调递减的数组，那么不买进卖出，利润为0。
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices)<=1:
+            return 0
+        
+        buy = prices[0]
+        profit = 0
+        
+        for i in range(1,len(prices)):
+            temp_discrepancy = prices[i]-buy
+            if temp_discrepancy>profit:
+                profit = temp_discrepancy
+            if temp_discrepancy<0:
+                buy = prices[i]
+                
+        return profit
+        
+第122题
+同样是动态规划问题。将数组分为连续单调递增的子数组，在每个子数组里面，所有最大值减去最小值之和，就是利润。
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices)<=1:
+            return 0
+        
+        profit = 0
+        buy = prices[0]
+        temp_profit = 0
+        
+        for i in range(len(prices)):
+            discrepancy = prices[i]-buy
+            if discrepancy<=temp_profit:
+                buy = prices[i]
+                if temp_profit>0:
+                    profit += temp_profit
+                temp_profit = 0
+            else:
+                temp_profit = discrepancy
+                
+        if temp_profit>0:
+            profit += temp_profit
+                
+        return profit

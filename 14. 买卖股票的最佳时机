@@ -52,3 +52,7 @@ class Solution(object):
             profit += temp_profit
                 
         return profit
+第123题
+
+
+第124题

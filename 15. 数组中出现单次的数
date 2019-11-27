@@ -1,0 +1,61 @@
+第136题
+设置初始值x为0，x依次与数组中的值异或，最后得到的数就是出现单次的值。
+出现偶数次的值异或的结果为0,0与任何数的异或是任何数。
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        x = 0
+        for number in nums:
+            x = x^number
+            
+        return x
+
+第137题
+使用字典，key为数组中出现的数，value为它出现的次数，如果出现了三次就从字典中删除，最后字典中只剩下唯一的key。
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        d = {}
+        
+        for number in nums:
+            if number not in d:
+                d[number] = 1
+            else:
+                d[number] += 1
+                
+            if d[number]==3:
+                d.pop(number)
+                
+        for i in d:
+            return i
+
+第260题
+通杀个体，使用字典。
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        d = {}
+        
+        for number in nums:
+            if number not in d:
+                d[number] = 1
+            else:
+                d[number] += 1
+                
+            if d[number]==2:
+                d.pop(number)
+        
+        res = []
+        for i in d:
+            res.append(i)
+            
+        return res

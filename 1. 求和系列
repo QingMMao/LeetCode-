@@ -92,3 +92,24 @@ class Solution(object):
         
         for i in range(index,len(candidates)):
             self.func(candidates,target-candidates[i],i+1,path+[candidates[i]],res)
+5.第198题
+在正数组中，不能获取连续位置的数。
+1.有两个变量last和now。last记录到上一个位置index-1能获取的最大数值，now记录到这一位置index能获取的最大数值。
+2.到目前的位置i，这个数不能加上临近的数值，只能加上i-2位置的数值。
+3.last记录的是上一个位置的上一个位置i-2能获取的最大值，那么要更新为上一位置i-1能获取的最大值；now记录的是上一个位置能获取
+的最大值，那么要更新为这一位置能获取的最大值，这一位置能获取的最大值从下面两个中选取：
+（1）i-2位置能获取的最大值加上i位置的值
+（2）原本now的值
+4.last和now同时更新，不能有先后顺序
+class Solution(object):
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        last = now = 0
+        
+        for number in nums:
+            last,now = now,max(last+number,now)
+            
+        return now

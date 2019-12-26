@@ -1,0 +1,23 @@
+题目是求每个位置，除这个位置其他位置的乘积。
+设置两个辅助数组，长度和原数组一样。
+数组1第一个数为1，此后每个位置的值为：数组1的前一个位置与当前原数组位置的乘积。
+数组2最后一个数为1，依次往前，每个位置的值为：数组2的后一个位置与当前原数组的乘积。
+数组1和数组2每个位置依次相乘就是返回的结果。
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        l = len(nums)
+        res1 = [1 for _ in range(l)]
+        res2 = [1 for _ in range(l)]
+        
+        for i in range(l-1):
+            res1[i+1] = res1[i]*nums[i]
+            res2[l-1-(i+1)] = res2[l-(i+1)]*nums[l-1-i]
+            
+        for i in range(l):
+            nums[i] = res1[i]*res2[i]
+            
+        return nums

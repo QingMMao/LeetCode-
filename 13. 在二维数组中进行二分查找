@@ -36,3 +36,46 @@ class Solution(object):
                 high = mid-1
                 
         return False
+第240题
+数组从左到右是升序，从上到下是升序。那么可以判断target是否在这一行中，如果在的话，使用二分查找。（74题也可以用）
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        row = len(matrix)
+        if row==0:
+            return False
+        col = len(matrix[0])
+        if col==0:
+            return False
+        
+        flag = False
+        for i in range(row):
+#            print(i)
+            if target>=matrix[i][0] and target<=matrix[i][col-1]:
+                flag = self.Binary_search(matrix[i],target)
+            if flag:
+                return True
+        return False
+    
+    def Binary_search(self,nums,target):
+#        print(nums)
+        low = 0
+        high = len(nums)-1
+        mid = (low+high)//2
+        
+        while low<=high:
+#            print("low:",low,"high:",high)
+            if nums[low]==target or nums[mid]==target or nums[high]==target:
+                return True
+            if nums[mid]>target:
+                high = mid-1
+            else:
+                low = mid+1
+                
+            mid = (low+high)//2
+                
+        return False

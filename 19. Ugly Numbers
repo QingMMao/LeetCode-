@@ -1,0 +1,61 @@
+第263题
+class Solution(object):
+    def isUgly(self, num):
+        """
+        :type num: int
+        :rtype: bool
+        """
+        while num>1:
+            if num%2==0:
+                num = num//2
+                continue
+            if num%3==0:
+                num = num//3
+                continue
+            if num%5==0:
+                num = num//5
+                continue
+            
+            return False
+        
+        return num==1
+        
+第264题
+ugly number的序列是固定好的：1,2,3,4,5,6,8,9...取第n位就行了。
+那么怎么由已有的结果算出后面的序列呢？
+初始的序列肯定包含1，要满足条件，就要用2,3,5来乘以已有的结果（而不是用1,2,3,4...去乘），然后作比较，选取最小的那个加入序列。
+那么该用已有结果中的哪一个来乘呢？
+设置三个下标i2，i3，i5分别代表2,3,4乘以已有结果中的第几个数。
+得到本次最小结果之后，如果它能整除2，那么i2+1，能整除3，i3+1，能整除5，i5+1(因为没有重复的数字)。
+class Solution(object):
+    def nthUglyNumber(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n==1:
+            return 1
+        
+        res = [1]
+        a,b,c = 2,3,5
+        i2,i3,i5 = 0,0,0
+        
+        while n>1:
+            temp2 = res[i2]*a
+            temp3 = res[i3]*b
+            temp5 = res[i5]*c
+            temp = min(temp2,temp3,temp5)
+            res.append(temp)
+#            print(n,temp)
+            
+            if temp==temp2:
+                i2 += 1
+            if temp==temp3:
+                i3 += 1
+            if temp==temp5:
+                i5 += 1
+            
+            n -= 1
+            
+        return temp
+

@@ -1,0 +1,64 @@
+方法一：数组降序排列，从数组的第一个位置开始，取amount//coins[i]个数目为coins[i]的硬币
+       然后剩余的amount-coins[i]*(amount//coins[i])由coins[i+1:]组成
+       
+       再取amount//coins[i]-1个数目为coins[i]的硬币
+       如此迭代，遍历所有可能的解
+       
+       选取最小的解or没有的话返回1
+       
+ class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        if amount==0:
+            return 0
+        coins.sort()
+        
+        res = []
+        count = 0
+        self.fun(coins[::-1],amount,count,res)
+        if len(res)==0:
+            return -1
+        else:
+            return min(res)
+        
+    def fun(self,coins,amount,count,res):
+#        print(coins,amount,count)
+        if len(coins)==0:
+            return
+        if amount%coins[0]==0:
+            res.append(count+amount//coins[0])
+            return 
+        if amount<coins[0]:
+            self.fun(coins[1:],amount,count,res)
+        number = amount//coins[0]
+#        print(number)
+        for i in range(1,number+1)[::-1]:
+            self.fun(coins[1:],amount-coins[0]*i,count+i,res)
+            
+能找到答案，但是会超时
+
+方法二：初始化一个（amount+1）的数组d，数组第一个位置的值为0，其余为大于amount的数（比如amount+1或者inf）
+对每个位置i：d[i] = min(d[i]，d[i-coins里存在的数coin]+1)（i=coin+（i-coin），这里1代表要加上这个coin，剩余由d[i-coin]组成）
+如果位置amount的值大于amount，就是没找到，返回1。否则，返回d[amount].
+
+class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        dp = [amount+1]*(amount+1)
+        dp[0] = 0
+        
+        for coin in coins:
+            for i in range(coin,amount+1):
+                dp[i] = min(dp[i],dp[i-coin]+1)
+                
+        return dp[amount] if dp[amount]<=amount else -1 
+ 
+ 

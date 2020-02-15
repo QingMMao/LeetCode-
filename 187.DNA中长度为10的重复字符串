@@ -1,0 +1,24 @@
+看到字符串匹配，首先想到的是KMP算法：设置res存储重复字符串，设置found_index存储找到的重复字符串的位置。对于每十个字符串，它的起始index
+已存在于found_index或者如果该字符串已经存在于res,跳过这一步不用做KMP。KMP主要的是要算出next的值。这个方法的问题在于，如果res里面存的字
+符串越来越多，那么就会越来越耗时。
+
+主流的做法是hashmap，从位置0到len(s)-9，取十个字符为一个字符串。如果它不在hashmap里，就放入且设置值为1,。如果在，就将值加上1。
+如果该key的value为2才加入res里面（防止出现三遍及以上孩子啊往res里面加）。
+
+class Solution(object):
+    def findRepeatedDnaSequences(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        d = {}
+        ans = []
+        for i in xrange(len(s) - 9):
+            key = s[i:i + 10]
+            if key in d:
+                d[key] += 1
+                if d[key] == 2:
+                    ans.append(key)
+            else:
+                d[key] = 1
+        return ans

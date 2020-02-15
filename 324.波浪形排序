@@ -1,0 +1,19 @@
+如果要求是a0=<a1>=a2<=a3>=a4...，那么直接对数据进行排序，然后对排序后的位置直接a0、a3、a1、a4、a2这样就行了。（swiggle sort）
+
+要求a0<a1>a2<a3>a4...，那么可以画一个波浪形的图来直观理解，波谷就是较小的值，波峰就是较大的值，如果还用上述方法来做，那么就会有：有连续几个值相等
+导致题设不成立的问题。如果将数组升序排列，然后取前（n+1）//2个数倒序排列在波谷，后面的数倒序排列在波峰，如果确定有解，那么中间连续相等的数的个数一定
+不会超过n//2。
+
+class Solution(object):
+    def wiggleSort(self,nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        nums.sort()
+        l = len(nums)
+            
+        half_amount = (l+1)//2
+        nums[::2],nums[1::2] = nums[:half_amount][::-1],nums[half_amount:][::-1]
+        
+        print(nums)
